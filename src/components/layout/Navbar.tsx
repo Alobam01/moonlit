@@ -82,11 +82,7 @@ export function Navbar() {
 
           {/* CTA Button */}
           <div className="hidden lg:flex items-center gap-3">
-            <Link href="/admin">
-              <Button variant="ghost" size="sm">
-                Admin
-              </Button>
-            </Link>
+          
             <Link href="/contact">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button variant="hero" size="default" className="gap-2">
