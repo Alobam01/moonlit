@@ -17,8 +17,6 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import {
-  Mail,
-  Phone,
   MapPin,
   Clock,
   Send,
@@ -177,7 +175,7 @@ export default function Contact() {
                           type="tel"
                           value={formData.phone}
                           onChange={handleChange}
-                          placeholder="(555) 123-4567"
+                          placeholder="Your phone number"
                         />
                       </div>
                       <div className="space-y-2">
@@ -244,54 +242,7 @@ export default function Contact() {
                   Contact Information
                 </h2>
                 <div className="space-y-6">
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-coral/10 flex items-center justify-center shrink-0">
-                      <MapPin className="w-6 h-6 text-coral" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-1">
-                        Our Location
-                      </h3>
-                      <p className="text-muted-foreground">
-                        123 Purrfect Lane<br />
-                        Whisker Valley, CA 90210
-                      </p>
-                    </div>
-                  </div>
 
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-coral/10 flex items-center justify-center shrink-0">
-                      <Phone className="w-6 h-6 text-coral" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-1">
-                        Phone Number
-                      </h3>
-                      <a
-                        href="tel:+15551234567"
-                        className="text-muted-foreground hover:text-primary transition-colors"
-                      >
-                        (555) 123-4567
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-coral/10 flex items-center justify-center shrink-0">
-                      <Mail className="w-6 h-6 text-coral" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-1">
-                        Email Address
-                      </h3>
-                      <a
-                        href="mailto:hello@purrfecthaven.com"
-                        className="text-muted-foreground hover:text-primary transition-colors"
-                      >
-                        hello@purrfecthaven.com
-                      </a>
-                    </div>
-                  </div>
 
                   <div className="flex gap-4">
                     <div className="w-12 h-12 rounded-xl bg-coral/10 flex items-center justify-center shrink-0">

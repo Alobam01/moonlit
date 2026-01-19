@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Phone, Mail, ArrowRight } from "lucide-react";
+import { Mail, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function CTASection() {
@@ -79,31 +79,6 @@ export function CTASection() {
             </Link>
           </motion.div>
 
-          {/* Contact info */}
-          <motion.div
-            className="flex flex-wrap justify-center gap-8"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.6 }}
-          >
-            <motion.a
-              href="tel:+15551234567"
-              className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors glass-card px-4 py-2 rounded-full"
-              whileHover={{ scale: 1.05 }}
-            >
-              <Phone className="w-5 h-5" />
-              <span>(555) 123-4567</span>
-            </motion.a>
-            <motion.a
-              href="mailto:hello@purrfecthaven.com"
-              className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors glass-card px-4 py-2 rounded-full"
-              whileHover={{ scale: 1.05 }}
-            >
-              <Mail className="w-5 h-5" />
-              <span>hello@purrfecthaven.com</span>
-            </motion.a>
-          </motion.div>
         </motion.div>
       </div>
     </section>

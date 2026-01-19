@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Heart, Mail, Phone, MapPin, Instagram, Facebook } from "lucide-react";
+import { Heart, Instagram, Facebook } from "lucide-react";
 import { createSupabaseBrowserClient } from "@/lib/supabaseClient";
 import { Breed } from "@/data/kittens";
 
@@ -121,38 +121,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
-          <div className="space-y-4">
-            <h4 className="font-serif text-lg font-semibold text-foreground">
-              Contact Us
-            </h4>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-3 text-sm">
-                <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                <span className="text-muted-foreground">
-                  123 Purrfect Lane, Whisker Valley, CA 90210
-                </span>
-              </li>
-              <li className="flex items-center gap-3 text-sm">
-                <Phone className="w-5 h-5 text-primary shrink-0" />
-                <a
-                  href="tel:+15551234567"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  (555) 123-4567
-                </a>
-              </li>
-              <li className="flex items-center gap-3 text-sm">
-                <Mail className="w-5 h-5 text-primary shrink-0" />
-                <a
-                  href="mailto:hello@purrfecthaven.com"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
-                  hello@purrfecthaven.com
-                </a>
-              </li>
-            </ul>
-          </div>
         </div>
 
         {/* Bottom Bar */}
