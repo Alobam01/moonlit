@@ -5,11 +5,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Home, Users, Award, Stethoscope, Clock, ArrowRight } from "lucide-react";
 
 const milestones = [
-  { year: "2004", title: "Our Beginning", description: "Started as a small family hobby breeding our first Ragdoll pair." },
+  { year: "2004", title: "Our Beginning", description: "Started as a small family hobby breeding our first Ragdoll and Munchkin pair " },
   { year: "2008", title: "TICA Registration", description: "Became officially registered with The International Cat Association." },
-  { year: "2012", title: "Expanded Breeds", description: "Added British Shorthairs and Persians to our breeding program." },
+  { year: "2012", title: "Expanded Breeds", description: "Added British Shorthairs, Scottish Fold and Persians to our breeding program. " },
   { year: "2018", title: "New Facility", description: "Built our dedicated cat facility with spacious play areas." },
-  { year: "2024", title: "500+ Adoptions", description: "Celebrated placing over 500 kittens in loving homes." },
+  { year: "2026", title: "500+ Adoptions", description: "Celebrated placing over 500 kittens in loving homes." },
 ];
 
 const values = [

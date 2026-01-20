@@ -15,7 +15,7 @@ const navLinks = [
   { href: "/breeds", label: "Our Breeds" },
   { href: "/health", label: "Health & Care" },
   { href: "/shipping-guarantee", label: "Shipping & Guarantee" },
-  { href: "/contact", label: "Contact" },
+  { href: "/contact", label: "Contact Us" },
 ];
 
 export function Navbar() {
@@ -166,11 +166,7 @@ export function Navbar() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
               >
-                <Link href="/admin" onClick={() => setIsOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">
-                    Admin Dashboard
-                  </Button>
-                </Link>
+               
                 <Link href="/contact" onClick={() => setIsOpen(false)}>
                   <Button variant="hero" className="w-full">
                     <Phone className="w-4 h-4 mr-2" />
