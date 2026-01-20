@@ -38,13 +38,15 @@ export function KittenCard({
       <Card variant="kitten" className="group overflow-hidden glass-card">
         {/* Image */}
         <div className="relative aspect-square overflow-hidden">
-          <motion.img
-            src={mainImageUrl}
-            alt={name}
-            className="w-full h-full object-cover"
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.6 }}
-          />
+          <Link href={`/kittens/${id}`}>
+            <motion.img
+              src={mainImageUrl}
+              alt={name}
+              className="w-full h-full object-cover"
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.6 }}
+            />
+          </Link>
           
           {/* Gradient Overlay */}
           <motion.div

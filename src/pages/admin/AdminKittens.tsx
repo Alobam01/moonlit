@@ -23,11 +23,13 @@ import {
 import { Plus, Search, MoreHorizontal, Pencil, Trash2, Eye, Loader2 } from "lucide-react";
 import { Kitten } from "@/data/kittens";
 import { createSupabaseBrowserClient } from "@/lib/supabaseClient";
+import { useToast } from "@/hooks/use-toast";
 
 export default function AdminKittens() {
   const [searchQuery, setSearchQuery] = useState("");
   const [allKittens, setAllKittens] = useState<Kitten[]>([]);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
     const supabase = createSupabaseBrowserClient();
@@ -67,6 +69,33 @@ export default function AdminKittens() {
 
     loadKittens();
   }, []);
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this kitten?")) {
+      return;
+    }
+
+    const supabase = createSupabaseBrowserClient();
+
+    const { error } = await supabase.from("kittens").delete().eq("id", id);
+
+    if (error) {
+      console.error("Failed to delete kitten:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete kitten. Please try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "Kitten deleted",
+      description: "The kitten has been removed from your listings.",
+    });
+
+    setAllKittens((prev) => prev.filter((k) => k.id !== id));
+  };
 
   const filteredKittens = allKittens.filter(
     (kitten) =>
@@ -184,7 +213,10 @@ export default function AdminKittens() {
                             Edit
                           </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive flex items-center gap-2">
+                        <DropdownMenuItem
+                          className="text-destructive flex items-center gap-2"
+                          onClick={() => handleDelete(kitten.id)}
+                        >
                           <Trash2 className="w-4 h-4" />
                           Delete
                         </DropdownMenuItem>
