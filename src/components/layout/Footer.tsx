@@ -82,7 +82,7 @@ export function Footer() {
               {[
                 { href: "/kittens", label: "Available Kittens" },
                 { href: "/about", label: "About Us" },
-                { href: "/adoption", label: "Adoption Process" },
+                { href: "/breeds", label: "Our Breeds" },
                 { href: "/health", label: "Health Guarantee" },
                 { href: "/contact", label: "Contact Us" },
               ].map((link) => (

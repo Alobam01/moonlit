@@ -1,328 +1,390 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
+import React, { useState } from "react";
+import { Send, Heart } from "lucide-react";
 import { PublicLayout } from "@/components/layout/PublicLayout";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
-import {
-  MapPin,
-  Clock,
-  Send,
-  Instagram,
-  Facebook,
-  MessageCircle,
-} from "lucide-react";
-import { createSupabaseBrowserClient } from "@/lib/supabaseClient";
-import { Breed } from "@/data/kittens";
+import Link from "next/link";
 
-export default function Contact() {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [breeds, setBreeds] = useState<Breed[]>([]);
+const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    breed: "",
+    address: "",
+    city: "",
+    state: "",
     message: "",
+    interestedKitten: "",
+    preferredBreed: "",
+    budget: "",
+    timeline: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus("idle");
 
     try {
+      const detailedMessage = `${formData.message}\n\nAdditional Details:\n- Address: ${formData.address}, ${formData.city}, ${formData.state}\n- Preferred Breed: ${formData.preferredBreed}\n- Preferred Contact Method: ${formData.budget}\n- Timeline: ${formData.timeline}\n- Interested Kitten: ${formData.interestedKitten}`;
+
+      // Map form data to existing contact API fields
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        breed: formData.preferredBreed,
+        message: detailedMessage,
+      };
+
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
         throw new Error("Failed to send message");
       }
 
-      toast({
-        title: "Message Sent!",
-        description: "We'll get back to you within 24 hours.",
+      setSubmitStatus("success");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+        city: "",
+        state: "",
+        message: "",
+        interestedKitten: "",
+        preferredBreed: "",
+        budget: "",
+        timeline: "",
       });
-
-      setFormData({ name: "", email: "", phone: "", breed: "", message: "" });
     } catch (error) {
-      console.error(error);
-      toast({
-        title: "Something went wrong",
-        description: "Please try again in a few minutes.",
-        variant: "destructive",
-      });
+      console.error("Error submitting inquiry:", error);
+      setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  useEffect(() => {
-    const supabase = createSupabaseBrowserClient();
-
-    async function loadBreeds() {
-      try {
-        const { data, error } = await supabase
-          .from("breeds")
-          .select("*")
-          .order("name", { ascending: true });
-
-        if (!error && data) {
-          setBreeds(
-            data.map((b) => ({
-              id: String(b.id),
-              name: b.name,
-              description: b.description,
-            }))
-          );
-        }
-      } catch (error) {
-        console.error("Failed to load breeds:", error);
-      }
-    }
-
-    loadBreeds();
-  }, []);
-
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   return (
     <PublicLayout>
-      {/* Hero */}
-      <section className="py-24 gradient-warm">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center animate-fade-up">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-coral/10 text-coral-dark text-sm font-medium mb-4">
-              Get in Touch
-            </span>
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              We'd Love to
-              <span className="text-gradient block">Hear from You</span>
-            </h1>
-            <p className="text-lg text-muted-foreground">
-              Have questions about our kittens or the adoption process? 
-              We're here to help you find your perfect companion.
+      <div className="min-h-screen bg-cream-50">
+        {/* Header */}
+        <div className="bg-gradient-to-br from-gold-600 via-gold-500 to-secondary-500 text-white py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-4xl lg:text-5xl font-bold mb-4  text-gray-900">CONTACT US</h1>
+            <p className="text-xl text-gold-50/90 font-bold text-gray-900">
+              Ready to find your perfect kitten? We&apos;d love to hear from you!
             </p>
           </div>
         </div>
-      </section>
 
-      {/* Contact Form & Info */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-16">
-            {/* Form */}
-            <div className="animate-fade-up">
-              <Card variant="elevated">
-                <CardContent className="p-8">
-                  <h2 className="font-serif text-2xl font-bold text-foreground mb-6">
-                    Send Us a Message
-                  </h2>
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="name">Full Name *</Label>
-                        <Input
-                          id="name"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          placeholder="Your name"
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email Address *</Label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          placeholder="your@email.com"
-                          required
-                        />
-                      </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            {/* Contact Information */}
+           
+
+            {/* Contact Form */}
+            <div className="lg:col-span-2">
+              <div className="card-surface p-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
+
+                {submitStatus === "success" && (
+                  <div className="mb-6 p-4 bg-cream-100 border border-gold-200 rounded-lg">
+                    <div className="flex items-center">
+                      <Heart className="w-5 h-5 text-gold-600 mr-2" />
+                      <p className="text-gold-800 font-medium">
+                        Thank you for contacting us!
+                      </p>
                     </div>
+                    <p className="text-gray-700 text-sm mt-1">
+                      We&apos;ve received your information and will get back to you as soon as
+                      possible. We look forward to helping you find the perfect companion!
+                    </p>
+                  </div>
+                )}
 
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="phone">Phone Number</Label>
-                        <Input
-                          id="phone"
-                          name="phone"
-                          type="tel"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          placeholder="Your phone number"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="breed">Breed Interest</Label>
-                        <Select
-                          value={formData.breed}
-                          onValueChange={(value) =>
-                            setFormData({ ...formData, breed: value })
-                          }
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select a breed" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="any">Any Breed</SelectItem>
-                            {breeds.map((breed) => (
-                              <SelectItem key={breed.id} value={breed.name}>
-                                {breed.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
+                {submitStatus === "error" && (
+                  <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-red-800 font-medium">Oops! Something went wrong.</p>
+                    <p className="text-red-700 text-sm mt-1">
+                      Please try again or contact us directly via email or phone.
+                    </p>
+                  </div>
+                )}
 
-                    <div className="space-y-2">
-                      <Label htmlFor="message">Your Message *</Label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        value={formData.message}
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-medium text-gray-700 mb-2"
+                      >
+                        Full Name *
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
                         onChange={handleChange}
-                        placeholder="Tell us about yourself and what you're looking for..."
-                        rows={5}
                         required
+                        className="w-full px-4 py-3 border border-gold-200 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-400 transition-colors bg-white"
+                        placeholder="Your full name"
                       />
                     </div>
 
-                    <Button
-                      type="submit"
-                      variant="hero"
-                      size="lg"
-                      className="w-full gap-2"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? (
-                        "Sending..."
-                      ) : (
-                        <>
-                          <Send className="w-4 h-4" />
-                          Send Message
-                        </>
-                      )}
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Contact Info */}
-            <div className="space-y-8 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-              <div>
-                <h2 className="font-serif text-2xl font-bold text-foreground mb-6">
-                  Contact Information
-                </h2>
-                <div className="space-y-6">
-
-
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-coral/10 flex items-center justify-center shrink-0">
-                      <Clock className="w-6 h-6 text-coral" />
-                    </div>
                     <div>
-                      <h3 className="font-semibold text-foreground mb-1">
-                        Response Time
-                      </h3>
-                      <p className="text-muted-foreground">
-                        We respond to all inquiries within 24 hours
-                      </p>
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium text-gray-700 mb-2"
+                      >
+                        Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 border border-gold-200 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-400 transition-colors bg-white"
+                        placeholder="your.email@example.com"
+                      />
                     </div>
                   </div>
-                </div>
-              </div>
 
-              {/* Social */}
-              <div>
-                <h3 className="font-semibold text-foreground mb-4">
-                  Follow Us
-                </h3>
-                <div className="flex gap-3">
-                  <a
-                    href="#"
-                    className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all"
-                  >
-                    <Instagram className="w-5 h-5" />
-                  </a>
-                  <a
-                    href="#"
-                    className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all"
-                  >
-                    <Facebook className="w-5 h-5" />
-                  </a>
-                  <a
-                    href="#"
-                    className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all"
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                  </a>
-                </div>
-              </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label
+                        htmlFor="phone"
+                        className="block text-sm font-medium text-gray-700 mb-2"
+                      >
+                        Phone Number *
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 border border-gold-200 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-400 transition-colors bg-white"
+                        placeholder="(555) 123-4567"
+                      />
+                    </div>
 
-              {/* FAQ Teaser */}
-              <Card variant="feature" className="mt-8">
-                <CardContent className="p-6">
-                  <h3 className="font-serif text-lg font-semibold text-foreground mb-2">
-                    Quick Questions?
-                  </h3>
-                  <p className="text-muted-foreground text-sm mb-4">
-                    Check our adoption process and health guarantee pages for 
-                    answers to common questions.
-                  </p>
-                  <div className="flex gap-2">
-                    <Button variant="soft" size="sm" asChild>
-                      <a href="/adoption">Adoption Process</a>
-                    </Button>
-                    <Button variant="soft" size="sm" asChild>
-                      <a href="/health">Health Guarantee</a>
-                    </Button>
+                    <div>
+                      <label
+                        htmlFor="preferredBreed"
+                        className="block text-sm font-medium text-gray-700 mb-2"
+                      >
+                        Preferred Breed *
+                      </label>
+                      <select
+                        id="preferredBreed"
+                        name="preferredBreed"
+                        value={formData.preferredBreed}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 border border-gold-200 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-400 transition-colors bg-white"
+                      >
+                        <option value="">Select a breed</option>
+                        <option value="Ragdoll">Ragdoll</option>
+                        <option value="Persian">Persian</option>
+                        <option value="Munchkin">Munchkin</option>
+                        <option value="No preference">No preference</option>
+                      </select>
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
+
+                  <div>
+                    <label
+                      htmlFor="address"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
+                      Address *
+                    </label>
+                    <input
+                      type="text"
+                      id="address"
+                      name="address"
+                      value={formData.address}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-gold-200 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-400 transition-colors bg-white"
+                      placeholder="Enter your full address"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label
+                        htmlFor="city"
+                        className="block text-sm font-medium text-gray-700 mb-2"
+                      >
+                        City *
+                      </label>
+                      <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        value={formData.city}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 border border-gold-200 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-400 transition-colors bg-white"
+                        placeholder="Enter your city"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="state"
+                        className="block text-sm font-medium text-gray-700 mb-2"
+                      >
+                        State *
+                      </label>
+                      <input
+                        type="text"
+                        id="state"
+                        name="state"
+                        value={formData.state}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 border border-gold-200 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-400 transition-colors bg-white"
+                        placeholder="Enter your state"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label
+                        htmlFor="budget"
+                        className="block text-sm font-medium text-gray-700 mb-2"
+                      >
+                        How do you wish to be contacted? *
+                      </label>
+                      <select
+                        id="budget"
+                        name="budget"
+                        value={formData.budget}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 border border-gold-200 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-400 transition-colors bg-white"
+                      >
+                        <option value="">Select preferred contact method</option>
+                        <option value="Email">Email</option>
+                        <option value="Phone">Phone</option>
+                        <option value="Text">Text</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="timeline"
+                        className="block text-sm font-medium text-gray-700 mb-2"
+                      >
+                        Timeline *
+                      </label>
+                      <select
+                        id="timeline"
+                        name="timeline"
+                        value={formData.timeline}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-4 py-3 border border-gold-200 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-400 transition-colors bg-white"
+                      >
+                        <option value="">When are you looking</option>
+                        <option value="Immediately">Immediately</option>
+                        <option value="Within 1 week">Within 1 week</option>
+                        <option value="Within 2 weeks">Within 2 weeks</option>
+                        <option value="Within 3 weeks">Within 3 weeks</option>
+                        <option value="Within 1 - 3 months">Within 1 - 3 months</option>
+                        <option value="Just browsing">Just browsing</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="interestedKitten"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
+                      Specific Kitten Interest *
+                    </label>
+                    <input
+                      type="text"
+                      id="interestedKitten"
+                      name="interestedKitten"
+                      value={formData.interestedKitten}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-gold-200 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-400 transition-colors bg-white"
+                      placeholder="Name of specific kitten you're interested in (or 'None' if just browsing)"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
+                      Message *
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={6}
+                      className="w-full px-4 py-3 border border-gold-200 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-400 transition-colors resize-none bg-white"
+                      placeholder="Tell us about yourself, your experience with cats, your living situation, and what you're looking for in a kitten..."
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-gold-600 via-gold-500 to-secondary-500 text-white font-semibold rounded-xl hover:from-gold-700 hover:via-gold-600 hover:to-secondary-600 transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-5 h-5 mr-2" />
+                        Send Message
+                      </>
+                    )}
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Map Placeholder */}
-      <section className="h-96 bg-secondary relative">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <MapPin className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-            <p className="text-muted-foreground">
-              Interactive map coming soon
-            </p>
-          </div>
-        </div>
-      </section>
+      </div>
     </PublicLayout>
   );
-}
+};
+
+export default Contact;

@@ -12,7 +12,7 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About Us" },
   { href: "/kittens", label: "Available Kittens" },
-  { href: "/adoption", label: "Adoption" },
+  { href: "/breeds", label: "Our Breeds" },
   { href: "/health", label: "Health & Care" },
   { href: "/shipping-guarantee", label: "Shipping & Guarantee" },
   { href: "/contact", label: "Contact" },

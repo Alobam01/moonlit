@@ -1,6 +1,6 @@
-import Adoption from "@/pages/Adoption";
-
+// This route has been removed in favor of the dedicated breeds page.
+// Keeping the file minimal to avoid 404 build issues if referenced.
 export default function AdoptionPage() {
-  return <Adoption />;
+  return null;
 }
 
