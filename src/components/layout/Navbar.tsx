@@ -14,6 +14,7 @@ const navLinks = [
   { href: "/kittens", label: "Available Kittens" },
   { href: "/adoption", label: "Adoption" },
   { href: "/health", label: "Health & Care" },
+  { href: "/shipping-guarantee", label: "Shipping & Guarantee" },
   { href: "/contact", label: "Contact" },
 ];
 

@@ -44,18 +44,67 @@ export default function About() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="animate-fade-up">
               <span className="inline-block px-4 py-1.5 rounded-full bg-coral/10 text-coral-dark text-sm font-medium mb-4">
-                Our Story
+                About Moonlit Elegance Kittens
               </span>
               <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-                A Family Passion for
-                <span className="text-gradient block">20+ Years</span>
+                Because Every Purr
+                <span className="text-gradient block">Begins with Love</span>
               </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                Purrfect Haven began as a family dream – to breed healthy, well-socialized 
-                kittens in a loving home environment. What started with our first Ragdoll 
-                pair in 2004 has grown into a recognized cattery, but our mission remains 
-                the same: every kitten deserves to be raised with love.
-              </p>
+              <div className="space-y-4 mb-8">
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  At Moonlit Elegance Kittens, we believe every kitten deserves a loving,
+                  lifelong home—and every family deserves a healthy, well-adjusted feline
+                  companion. Since 2004, we’ve been passionately dedicated to ethical,
+                  responsible breeding, with a strong focus on health, temperament, and
+                  breed integrity. Our mission is simple: to thoughtfully match each
+                  kitten with the family where they will truly thrive.
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  We are a trusted and established breeder specializing in several
+                  exceptional purebred cats, including Munchkin, Ragdoll, Persian,
+                  Scottish Fold, and British Shorthair kittens. All of our kittens are
+                  raised with intention and care—vet-checked, age-appropriate vaccinated,
+                  litter-trained, and thoroughly socialized before joining their new
+                  homes.
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  What truly sets Moonlit Elegance Kittens apart is our unwavering
+                  commitment to animal welfare and ethical breeding practices. Our cats
+                  are never overbred, and their health and happiness always come first.
+                  All breeding cats are DNA tested for genetic and contagious diseases
+                  and have a clean bill of health. We work closely with licensed
+                  veterinarians and follow strict breeding standards to ensure every
+                  kitten gets the very best start in life.
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Our kittens are raised indoors as part of our family, with supervised
+                  access to a safe outdoor enclosure that allows them to explore, play,
+                  and develop confidence in a stress-free environment. From gentle
+                  handling to enrichment through toys and interaction, we focus on
+                  nurturing affectionate, well-balanced companions who transition
+                  smoothly into their forever homes.
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Whether you’re searching for a playful kitten to fill your home with
+                  joy or a calm, affectionate companion for quiet moments, we’re here to
+                  guide you every step of the way. We proudly offer nationwide delivery
+                  and ongoing support before, during, and after adoption—because our
+                  responsibility doesn’t end when your kitten goes home.
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Join the hundreds of happy families who have found their perfect match
+                  with Moonlit Elegance Kittens. We’re more than breeders—we’re
+                  caretakers, advocates, and matchmakers for lifelong bonds.
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed font-medium">
+                  Because every purr begins with love.
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  If you’d like to learn more about our breeds or are interested in
+                  reserving a kitten, we’d love to hear from you. Please don’t hesitate
+                  to contact us with any questions—we’re always happy to help.
+                </p>
+              </div>
               <div className="flex gap-4">
                 <Link href="/kittens">
                   <Button variant="hero" size="lg" className="gap-2">
@@ -164,29 +213,31 @@ export default function About() {
 
             <div className="order-1 lg:order-2 animate-fade-up" style={{ animationDelay: "0.2s" }}>
               <span className="inline-block px-4 py-1.5 rounded-full bg-blush text-coral-dark text-sm font-medium mb-4">
-                Meet the Family
+                Our Approach
               </span>
               <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
-                The Hearts Behind Purrfect Haven
+                Ethical Breeding. Healthy Kittens.
+                <span className="text-gradient block">Lifelong Support.</span>
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                We're the Thompson family – parents Mike and Sarah, along with our three 
-                children who help socialize every kitten. Our home is always filled with 
-                purring, playing, and plenty of love.
+                Our cats are never overbred, and their health and happiness always come
+                first. All breeding cats are DNA tested for genetic and contagious
+                diseases, and we work closely with licensed veterinarians while following
+                strict breeding standards.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                Our on-site veterinary partner Dr. Emily ensures every kitten receives 
-                the best health care. We're not just breeders – we're cat lovers who 
-                happen to share our passion with others.
+                We provide nationwide delivery and ongoing support before, during, and
+                after adoption—because our responsibility doesn’t end when your kitten
+                goes home.
               </p>
               <div className="flex items-center gap-6">
                 <div className="flex items-center gap-2">
                   <Users className="w-5 h-5 text-coral" />
-                  <span className="text-foreground font-medium">5 Family Members</span>
+                  <span className="text-foreground font-medium">Family-Raised</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="w-5 h-5 text-coral" />
-                  <span className="text-foreground font-medium">20+ Years Experience</span>
+                  <span className="text-foreground font-medium">Since 2004</span>
                 </div>
               </div>
             </div>

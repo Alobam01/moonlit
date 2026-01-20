@@ -24,6 +24,19 @@ export interface ImageKitUploadResponse {
   type: string;
 }
 
+async function readJsonOrThrow<T>(res: Response, context: string): Promise<T> {
+  const text = await res.text();
+  if (!text) {
+    throw new Error(`${context}: empty response body`);
+  }
+  try {
+    return JSON.parse(text) as T;
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    throw new Error(`${context}: invalid JSON response (${msg}). Body: ${text.slice(0, 300)}`);
+  }
+}
+
 /**
  * Fetches authentication parameters from the server
  * for secure ImageKit uploads
@@ -36,7 +49,7 @@ export async function getImageKitAuth(): Promise<ImageKitAuthResponse> {
     throw new Error(`Failed to get ImageKit auth parameters: ${errorText}`);
   }
   
-  const data = (await res.json()) as ImageKitAuthResponse;
+  const data = await readJsonOrThrow<ImageKitAuthResponse>(res, "Failed to parse ImageKit auth response");
   
   if (!data.publicKey) {
     throw new Error("ImageKit public key is not configured");
@@ -98,7 +111,7 @@ export async function uploadImageToImageKit(
       throw new Error(`Image upload failed: ${errorText}`);
     }
 
-    const json = (await res.json()) as ImageKitUploadResponse;
+    const json = await readJsonOrThrow<ImageKitUploadResponse>(res, "Failed to parse ImageKit upload response");
     return json.url;
   } catch (error) {
     if (error instanceof Error) {
