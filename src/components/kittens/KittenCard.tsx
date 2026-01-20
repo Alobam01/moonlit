@@ -48,9 +48,9 @@ export function KittenCard({
             />
           </Link>
           
-          {/* Gradient Overlay */}
+          {/* Gradient Overlay (non-interactive so image click still works) */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent"
             initial={{ opacity: 0 }}
             whileHover={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
