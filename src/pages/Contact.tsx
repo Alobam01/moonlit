@@ -1,9 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Send, Heart } from "lucide-react";
 import { PublicLayout } from "@/components/layout/PublicLayout";
 import Link from "next/link";
+import { createSupabaseBrowserClient } from "@/lib/supabaseClient";
+
+interface Breed {
+  id: string;
+  name: string;
+  description: string;
+}
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -21,6 +28,40 @@ const Contact: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [breeds, setBreeds] = useState<Breed[]>([]);
+  const [loadingBreeds, setLoadingBreeds] = useState(true);
+
+  useEffect(() => {
+    const supabase = createSupabaseBrowserClient();
+
+    async function loadBreeds() {
+      setLoadingBreeds(true);
+      try {
+        const { data, error } = await supabase
+          .from("breeds")
+          .select("id, name, description")
+          .order("name", { ascending: true });
+
+        if (!error && data) {
+          setBreeds(
+            data.map((b) => ({
+              id: String(b.id),
+              name: b.name,
+              description: b.description,
+            })),
+          );
+        } else if (error) {
+          console.error("Failed to load breeds from Supabase", error);
+        }
+      } catch (err) {
+        console.error("Failed to load breeds from Supabase", err);
+      } finally {
+        setLoadingBreeds(false);
+      }
+    }
+
+    loadBreeds();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -203,12 +244,17 @@ const Contact: React.FC = () => {
                         value={formData.preferredBreed}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-gold-200 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-400 transition-colors bg-white"
+                        disabled={loadingBreeds}
+                        className="w-full px-4 py-3 border border-gold-200 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-400 transition-colors bg-white disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        <option value="">Select a breed</option>
-                        <option value="Ragdoll">Ragdoll</option>
-                        <option value="Persian">Persian</option>
-                        <option value="Munchkin">Munchkin</option>
+                        <option value="">
+                          {loadingBreeds ? "Loading breeds..." : "Select a breed"}
+                        </option>
+                        {breeds.map((breed) => (
+                          <option key={breed.id} value={breed.name}>
+                            {breed.name}
+                          </option>
+                        ))}
                         <option value="No preference">No preference</option>
                       </select>
                     </div>
