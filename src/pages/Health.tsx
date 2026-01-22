@@ -158,7 +158,7 @@ export default function Health() {
               <Card variant="elevated" className="overflow-hidden">
                 <div className="aspect-video relative">
                   <img
-                    src="https://images.unsplash.com/photo-1615789591457-74a63395c990?w=800&h=450&fit=crop"
+                    src="https://res.cloudinary.com/dq1w2rltw/image/upload/v1769117236/a58e0ce3-78bd-42c7-84c5-499d2d45774f_bp8nty.jpg"
                     alt="Healthy kitten at vet"
                     className="w-full h-full object-cover"
                   />

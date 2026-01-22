@@ -125,14 +125,14 @@ export default function About() {
                 <div className="space-y-4">
                   <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-card">
                     <img
-                      src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=500&fit=crop"
+                      src="https://res.cloudinary.com/dq1w2rltw/image/upload/v1769117235/d7cd2da1-ac23-46a1-84c7-10cc155c8898_oyjlc5.jpg"
                       alt="Kitten"
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="aspect-square rounded-2xl overflow-hidden shadow-card">
                     <img
-                      src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=400&h=400&fit=crop"
+                      src="https://res.cloudinary.com/dq1w2rltw/image/upload/v1769117235/8a8ce1d1-5c90-403c-9c20-71e01cffcf5d_obkjpx.jpg"
                       alt="Cat"
                       className="w-full h-full object-cover"
                     />
@@ -141,14 +141,14 @@ export default function About() {
                 <div className="space-y-4 pt-8">
                   <div className="aspect-square rounded-2xl overflow-hidden shadow-card">
                     <img
-                      src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=400&h=400&fit=crop"
+                      src="https://res.cloudinary.com/dq1w2rltw/image/upload/v1769117235/0f6a95c0-4794-4f07-82cc-e6bb5437e7b4_prbalj.jpg"
                       alt="Cat"
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-card">
                     <img
-                      src="https://images.unsplash.com/photo-1495360010541-f48722b34f7d?w=400&h=500&fit=crop"
+                      src="https://res.cloudinary.com/dq1w2rltw/image/upload/v1769117235/8503471b-3b0d-4fe0-91cb-f60377bc89d3_lyaei8.jpg"
                       alt="Kitten"
                       className="w-full h-full object-cover"
                     />

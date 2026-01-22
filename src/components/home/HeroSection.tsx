@@ -169,7 +169,7 @@ export function HeroSection() {
                 transition={{ duration: 0.4 }}
               >
                 <img
-                  src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=800&h=1000&fit=crop"
+                  src="https://res.cloudinary.com/dq1w2rltw/image/upload/v1769117235/d7cd2da1-ac23-46a1-84c7-10cc155c8898_oyjlc5.jpg"
                   alt="Beautiful kitten"
                   className="w-full h-full object-cover"
                 />
