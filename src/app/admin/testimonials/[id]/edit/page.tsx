@@ -41,6 +41,7 @@ export default function AdminEditTestimonialPage() {
     async function loadTestimonial() {
       if (!params.id) return;
 
+      setLoading(true);
       try {
         const { data, error } = await supabase
           .from("testimonials")
@@ -258,7 +259,16 @@ export default function AdminEditTestimonialPage() {
               </p>
             </div>
 
-            <div className="flex gap-4 pt-4">
+            <div className="flex justify-end gap-3 pt-4">
+              <Link href="/admin/testimonials">
+                <Button
+                  type="button"
+                  variant="outline"
+                  disabled={isSubmitting}
+                >
+                  Cancel
+                </Button>
+              </Link>
               <Button
                 type="submit"
                 variant="hero"
@@ -277,11 +287,6 @@ export default function AdminEditTestimonialPage() {
                   </>
                 )}
               </Button>
-              <Link href="/admin/testimonials">
-                <Button type="button" variant="outline">
-                  Cancel
-                </Button>
-              </Link>
             </div>
           </CardContent>
         </Card>
