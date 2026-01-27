@@ -406,11 +406,12 @@ const Contact: React.FC = () => {
                     />
                   </div>
 
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-gold-600 via-gold-500 to-secondary-500 text-white font-semibold rounded-xl hover:from-gold-700 hover:via-gold-600 hover:to-secondary-600 transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg"
-                  >
+                  <div className="mt-6">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-gold-600 via-gold-500 to-secondary-500 text-dark font-semibold rounded-xl hover:from-gold-700 hover:via-gold-600 hover:to-secondary-600 transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg"
+                    >
                     {isSubmitting ? (
                       <>
                         <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
@@ -422,7 +423,8 @@ const Contact: React.FC = () => {
                         Send Message
                       </>
                     )}
-                  </button>
+                    </button>
+                  </div>
                 </form>
               </div>
             </div>
