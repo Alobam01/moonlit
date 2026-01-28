@@ -36,7 +36,21 @@ export async function sendInquiryEmail(data: {
   breed?: string;
   message: string;
 }) {
-  const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_HOST_USER || "info@grandfortunion.hqmngtt.com";
+  // Validate email configuration
+  if (!emailConfig.auth.pass) {
+    console.error("EMAIL_HOST_PASSWORD is not set. Email sending will fail.");
+    throw new Error("Email server password is not configured. Please set EMAIL_HOST_PASSWORD environment variable.");
+  }
+
+  // Get admin email from environment variable
+  const adminEmail = process.env.ADMIN_EMAIL;
+  
+  if (!adminEmail) {
+    throw new Error("ADMIN_EMAIL environment variable is not set. Please configure ADMIN_EMAIL in your environment variables.");
+  }
+
+  console.log(`Sending inquiry email to: ${adminEmail}`);
+
   const fromEmail = process.env.DEFAULT_FROM_EMAIL || process.env.EMAIL_HOST_USER || "info@grandfortunion.hqmngtt.com";
 
   const mailOptions = {
@@ -122,9 +136,14 @@ You can reply directly to this email to respond to ${data.name}.
   try {
     const info = await transporter.sendMail(mailOptions);
     console.log("Email sent successfully:", info.messageId);
+    console.log("Email recipient:", adminEmail);
     return { success: true, messageId: info.messageId };
   } catch (error) {
     console.error("Error sending email:", error);
+    if (error instanceof Error) {
+      console.error("Error message:", error.message);
+      console.error("Error stack:", error.stack);
+    }
     throw error;
   }
 }

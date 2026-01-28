@@ -27,7 +27,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Failed to save inquiry" }, { status: 500 });
     }
 
-    // Send email notification to admin
+    // Send email notification to admin (from environment variable)
     try {
       await sendInquiryEmail({
         name,
@@ -36,9 +36,14 @@ export async function POST(request: Request) {
         breed: breed || undefined,
         message,
       });
+      console.log("Email sent successfully to admin");
     } catch (emailError) {
       // Log email error but don't fail the request if database save succeeded
       console.error("Failed to send email notification:", emailError);
+      // Log the error details for debugging
+      if (emailError instanceof Error) {
+        console.error("Email error details:", emailError.message);
+      }
       // Continue - the inquiry was saved to the database
     }
 
